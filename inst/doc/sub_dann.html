@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -376,21 +376,25 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb1-54" title="54"><span class="st">   </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-55" title="55"><span class="st">   </span><span class="kw">as.vector</span>()</a>
 <a class="sourceLine" id="cb1-56" title="56"> </a>
-<a class="sourceLine" id="cb1-57" title="57"> dannPreds &lt;-<span class="st"> </span><span class="kw">dann</span>(xTrain, yTrain, xTest, <span class="dv">3</span>, <span class="dv">50</span>, <span class="dv">1</span>, <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-58" title="58"> <span class="kw">mean</span>(dannPreds <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># Not a good model</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-57" title="57"> dannPreds &lt;-<span class="st"> </span><span class="kw">dann</span>(<span class="dt">xTrain =</span> xTrain, <span class="dt">yTrain =</span> yTrain, <span class="dt">xTest =</span> xTest, </a>
+<a class="sourceLine" id="cb1-58" title="58">                   <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">epsilon =</span> <span class="dv">1</span>, <span class="dt">probability =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-59" title="59"> <span class="kw">mean</span>(dannPreds <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># Not a good model</span></a></code></pre></div>
 <pre><code>## [1] 0.668</code></pre>
 <p>As expected, dann was not performant. Moving on to sub_dann, the dimension of the subspace should be chosen based on the number of large eigenvalues. The graph suggests 2 is good (the correct answer).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"> <span class="kw">graph_eigenvalues</span>(xTrain, yTrain, <span class="dv">50</span>, <span class="ot">FALSE</span>, <span class="st">&quot;mcd&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"> <span class="kw">graph_eigenvalues</span>(<span class="dt">xTrain =</span> xTrain, <span class="dt">yTrain =</span> yTrain, </a>
+<a class="sourceLine" id="cb3-2" title="2">                   <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">weighted =</span> <span class="ot">FALSE</span>, <span class="dt">sphere =</span> <span class="st">&quot;mcd&quot;</span>)</a></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"> subDannPreds &lt;-<span class="st"> </span><span class="kw">sub_dann</span>(xTrain, yTrain, xTest, <span class="dv">3</span>, <span class="dv">50</span>,</a>
-<a class="sourceLine" id="cb4-2" title="2">                          <span class="dv">1</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb4-3" title="3">                          <span class="st">&quot;mcd&quot;</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-4" title="4"> <span class="kw">mean</span>(subDannPreds <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># sub_dan does much better when unrelated variables are present.</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"> subDannPreds &lt;-<span class="st"> </span><span class="kw">sub_dann</span>(<span class="dt">xTrain =</span> xTrain, <span class="dt">yTrain =</span> yTrain, <span class="dt">xTest =</span> xTest, </a>
+<a class="sourceLine" id="cb4-2" title="2">                          <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">epsilon =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb4-3" title="3">                          <span class="dt">probability =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb4-4" title="4">                          <span class="dt">weighted =</span> <span class="ot">FALSE</span>, <span class="dt">sphere =</span> <span class="st">&quot;mcd&quot;</span>, <span class="dt">numDim =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-5" title="5"> <span class="kw">mean</span>(subDannPreds <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># sub_dan does much better when unrelated variables are present.</span></a></code></pre></div>
 <pre><code>## [1] 0.882</code></pre>
 <p>sub_dann did much better than dann. Lets see how dann does if only related variables are used.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"> variableSelectionDann &lt;-<span class="st"> </span><span class="kw">dann</span>(xTrain[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], yTrain, xTest[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dv">3</span>, <span class="dv">50</span>, <span class="dv">1</span>, <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2"> </a>
-<a class="sourceLine" id="cb6-3" title="3"> <span class="kw">mean</span>(variableSelectionDann <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># Best model found when only true predictors are used.</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"> variableSelectionDann &lt;-<span class="st"> </span><span class="kw">dann</span>(<span class="dt">xTrain =</span> xTrain[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">yTrain =</span> yTrain, <span class="dt">xTest =</span> xTest[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb6-2" title="2">                               <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">epsilon =</span> <span class="dv">1</span>, <span class="dt">probability =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb6-3" title="3"> </a>
+<a class="sourceLine" id="cb6-4" title="4"> <span class="kw">mean</span>(variableSelectionDann <span class="op">==</span><span class="st"> </span>yTest) <span class="co"># Best model found when only true predictors are used.</span></a></code></pre></div>
 <pre><code>## [1] 0.944</code></pre>
 <p>Overall, dann with the correct variables did better than sub_dann. In simulations one can simply pick the correct variables. In real applications the correct variables are usually unknown. sub_dann was able to estimate the correct number of features and get reasonably close to dann that only used related variables without having to know which variables are truly predictive.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"> <span class="kw">rm</span>(train, test)</a>
@@ -399,9 +403,6 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb8-4" title="4"> <span class="kw">rm</span>(dannPreds, subDannPreds, variableSelectionDann)</a></code></pre></div>
 </div>
 
-
-
-<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

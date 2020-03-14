@@ -152,19 +152,17 @@ dann_source <- function(xTrain, yTrain, xTest, k = 5, neighborhood_size = max(fl
     colnames(predictions) <- stringr::str_c("Class", as.character(sort(unique(yTrain))))
   }
 
+  NCOLX <- ncol(xTrain)
+
   for (i in seq_along(1:nrow(xTest))) {
 
     ###########
     # Find neighborhood for x[i,]
     ###########
-    distances <- vector(mode = "numeric", length = nrow(xTrain))
-    for (j in seq_along(1:nrow(xTrain))) {
-      # distances[j] <- sum( (xTest[i, ]-xTrain[j,])^2) ^ .5
-      distances[j] <- sum((xTrain[j, ] - xTest[i, ])^2)^.5
-    }
+    distances <- calc_distance_C(xTrain, xTest[i, ])
 
     nearest_neighbors <- order(distances)[1:neighborhood_size]
-    neighborhood_xTrain <- xTrain[nearest_neighbors, 1:ncol(xTrain), drop = FALSE]
+    neighborhood_xTrain <- xTrain[nearest_neighbors, 1:NCOLX, drop = FALSE]
     neighborhood_X_mean <- colMeans(neighborhood_xTrain)
     neighborhood_y <- yTrain[nearest_neighbors]
     neighborhood_classes <- unique(neighborhood_y)
@@ -173,8 +171,8 @@ dann_source <- function(xTrain, yTrain, xTest, k = 5, neighborhood_size = max(fl
     # Between and within matrices
     ###########
     class_frequencies <- vector(mode = "numeric", length = length(neighborhood_classes))
-    within_class_cov <- matrix(0, nrow = ncol(xTrain), ncol = ncol(xTrain))
-    between_class_cov <- matrix(0, nrow = ncol(xTrain), ncol = ncol(xTrain))
+    within_class_cov <- matrix(0, nrow = NCOLX, ncol = NCOLX)
+    between_class_cov <- matrix(0, nrow = NCOLX, ncol = NCOLX)
 
     for (kth in seq_along(1:length(neighborhood_classes))) {
       target_class <- neighborhood_classes[kth]
@@ -202,7 +200,7 @@ dann_source <- function(xTrain, yTrain, xTest, k = 5, neighborhood_size = max(fl
     }
     W_star <- MASS::ginv(W_star)
     B_star <- W_star %*% between_class_cov %*% W_star
-    I <- diag(ncol(xTrain))
+    I <- diag(NCOLX)
 
     sigma <- W_star %*% (B_star + epsilon * I) %*% W_star
 
@@ -210,8 +208,9 @@ dann_source <- function(xTrain, yTrain, xTest, k = 5, neighborhood_size = max(fl
     # DANN distance using sigma
     ###########
     distances <- vector(mode = "numeric", length = nrow(xTrain))
-    for (kth in seq_along(1:length(distances)))
-      distances[kth] <- DANN_distance(xTest[i, 1:ncol(xTest), drop = FALSE], xTrain[kth, 1:ncol(xTrain), drop = FALSE ], sigma)
+    for (kth in seq_along(1:length(distances))) {
+      distances[kth] <- DANN_distance_C(xTest[i, 1:NCOLX, drop = FALSE], xTrain[kth, 1:NCOLX, drop = FALSE ], sigma)
+    }
     nearest <- order(distances, length(distances):1)[1:k]
     if (!probability) {
       predictions[i] <- MODE(yTrain[nearest])
@@ -296,7 +295,11 @@ dann_source <- function(xTrain, yTrain, xTest, k = 5, neighborhood_size = max(fl
 #'   as.numeric() %>%
 #'   as.vector()
 #' 
-#' dannPreds <- dann(xTrain, yTrain, xTest, 3, 50, 1, FALSE)
+#' dannPreds <- dann(
+#'   xTrain = xTrain, yTrain = yTrain, xTest = xTest,
+#'   k = 3, neighborhood_size = 50, epsilon = 1,
+#'   probability = FALSE
+#' )
 #' mean(dannPreds == yTest) # An accurate model.
 #' 
 #' rm(train, test)

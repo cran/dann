@@ -58,19 +58,23 @@ knitr::opts_chunk$set(echo = TRUE)
    as.numeric() %>%
    as.vector()
  
- dannPreds <- dann(xTrain, yTrain, xTest, 3, 50, 1, FALSE)
+ dannPreds <- dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
+                   k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
  mean(dannPreds == yTest) # Not a good model
 
 ## ----exampleP2-----------------------------------------------------------
  
- graph_eigenvalues(xTrain, yTrain, 50, FALSE, "mcd")
- subDannPreds <- sub_dann(xTrain, yTrain, xTest, 3, 50,
-                          1, FALSE, FALSE,
-                          "mcd", 2)
+ graph_eigenvalues(xTrain = xTrain, yTrain = yTrain, 
+                   neighborhood_size = 50, weighted = FALSE, sphere = "mcd")
+ subDannPreds <- sub_dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
+                          k = 3, neighborhood_size = 50, epsilon = 1, 
+                          probability = FALSE, 
+                          weighted = FALSE, sphere = "mcd", numDim = 2)
  mean(subDannPreds == yTest) # sub_dan does much better when unrelated variables are present.
 
 ## ----exampleP3-----------------------------------------------------------
- variableSelectionDann <- dann(xTrain[, 1:2], yTrain, xTest[, 1:2], 3, 50, 1, FALSE)
+ variableSelectionDann <- dann(xTrain = xTrain[, 1:2], yTrain = yTrain, xTest = xTest[, 1:2],
+                               k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
  
  mean(variableSelectionDann == yTest) # Best model found when only true predictors are used.
 
