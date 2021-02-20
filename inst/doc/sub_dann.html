@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
@@ -94,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -115,9 +115,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -286,7 +283,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -383,7 +381,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>Moving on to sub_dann, the dimension of the subspace should be chosen based on the number of large eigenvalues. The graph suggests 2 is good (the correct answer).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"> <span class="kw">graph_eigenvalues</span>(<span class="dt">xTrain =</span> xTrain, <span class="dt">yTrain =</span> yTrain, </a>
 <a class="sourceLine" id="cb5-2" title="2">                   <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">weighted =</span> <span class="ot">FALSE</span>, <span class="dt">sphere =</span> <span class="st">&quot;mcd&quot;</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAvVBMVEUAAAAAADoAAGYAOpAAZrYzMzM6AAA6ADo6AGY6kNtNTU1NTW5NTY5NbqtNjshmAABmADpmtv9uTU1uTW5uTY5ubo5ubqtuq+SOTU2OTW6OTY6Obk2ObquOyP+QOgCQkDqQkGaQtpCQ27aQ2/+rbk2rbm6rbo6rjk2ryKur5OSr5P+2ZgC2///Ijk3I///bkDrb/7bb///kq27k///r6+v/tmb/yI7/25D/29v/5Kv//7b//8j//9v//+T///87P2i4AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAILElEQVR4nO2dC3vaNhiFnYSR0m6jZFvTXcIurLuUUK9tCEtC/P9/VnXzLZZ17CKEis95nhZhHzvo5dMnYYcvSUY5lRz6BcQuAgIiICACAiIgIAIC2hXQTaFK0/o8BkOPAwgIGAgIGAgIGAgIGAgIGAgIGAgIGAgIGLwDSpJk3937ogElyVNCBERABOQREHMQAhRD/wloVwMB+TuAgICBgICBgICBgICBgICBgICBgICBgIDBF6CjFyOo5TkBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAUN4QDHceo0ZUBQ37wnI3wEEBAzBATEHRTBJEdCuBgLydwABAQMBAQMBAQMBAQMBAQMBAQMBAUMHQA+vn3/zsdL68FzqSj1+/Y6AHv8ULL6tt7JbAWp1xQhSYfPTu+zu+3f11o9vs8c3bwlI6u7VRwWk2pJxJMabHGhCXwm1Hn4sagckR5PGUrTUf3ffVaMo5PsffwTdmqSdlXkoZPciA2TJQavLfCcBybnrspjFdEsPLBlGj39xms9XPzJ0zIpIDzi5DnpRTGQhuxcboE4K2T0C2ruBgPwdQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAQEDAYAV0P53dT5PTawJqAbQcZenpdToiIDsgEUDb+Shb9wmhkN2LAdD9dEJAumUBtJ1P1icLOdAIyJ6DNuNklC3P3hMQp3loICBgsANKk2SWcoiplg3Q8uw/PdNThRrT/IzTvG4RkNtgA5SlcojJtSIBtSTptfxaYB8+QwPUXyG7R0B7N+ycpNU3b3tdEArZvYMDMpheLhhBziG27rOUDtm9aABxiN04AfW63hGyewcHZJL0CXPQDad5aCAgYGgAyhdBXAeZFiPIbSAgYLAC2ow5xIqWBdB2PtnO1TUzAmq7opgtJ/yooVstgFLemzctCyB501nQ6XXfJ2T3Dg9IJKFsyY8aumUD9BkK2T0C2rth5yTd64bG8ADJW/NJn0XQ4AAJLXk9yLRaAElGZh30tDxOXhen3D5EQMvio1izPI4ut1ApljM4QLXx1ShNYSqalNsHB6j+MbVR3MTUxSm3szxOvTyOqYtTbpcK+f4fPILq14NsBZZkHqo+Gxig+i/f2Up0SUDMQUaN8jimLk65fXCAtvPaMrpRHsfUxRnwOqjXpbIBAuLvB3VYSTOC8hYBuQ12QPwqQtmyAfqMryKE7N7BAfE37Qmo+wE2QPwqAkzS/CpC2bIC6q+Q3SOgvRt2TtL5L+F1n+hDdu/ggGRdCnX7sMdSKGT3Dg7IXA8S03z3mT5k9who7wZfQyzr/nksZPcOD0ivg2ZZ2v3uc8juRQCov0J2j4D2btgFkC7PxUuuRYsR5DYQEDA0AKlFkFr/8HqQahGQ2+AL0NGLEdTynICAgYCAgYCAwQKIX+rlQpGA/B1AQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMBAQMDQAVCjPM7dhazdkVfJGTygRnkcWY9C1u/QVXIIqFGa4lbSWl2ZKjkEZC1uUlbJyVge52l5nExX8TBVcowr5PsffwQ9vL40O4s8FLJ7kQFqlse5uyjSMwFZyuMYPqZKDgE1yuPI9Y9Mz6ZKDgF1UsjuEdDeDQTk7wACAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAgYCAoYIASVJsuMZjhuQqmmw0xmiBORPChByBHot1R+64/H+3l4YQR5C7IseYjAHDR5QgCR13IA8THNHDuiLnMVCdo+AdjXAMThwQF0WCp3POERAzf0OggQEDMcICOUgAuoQYk7D4AHBA448B3EdRED7NhCQvwMICBgICBgICBgICBh8ASoFv98bgeEzTkBAwEBAwEBAwBDPndVIRUBABAREQEAEBOQNkK5i0b77wpSMadNtpWpTi2QdI4dqhZ+sh1cKIrQc33yRvgDduruXF2dqleSrC2G064Mb8cq5V+2/NSW1WtU0eAK0evGPM4JMcSb3SVAQ/vCz6wT1wk9NyRItSKZKUlWhhpj9p9fljqDHN/86h1hZ+Mmuu1d/u4eY/RWEAyRryDhPcOF++R8u3TmoXvjJdv4rVQnJIdtbGAxQWZyp3eIKMdE3kKSlHKO4UmisTbYUFW4Wg51zJyk9xyDIjjM8/AIBrSynDwQI8inrpLXLHUH1wk8WrdAQsw7QQIDsa4wnDpRC8TrIeQaRxd0rLesbxJU0EAEBERAQAQEREBABAUUCaDvXf+J10ty1OV9Unq2la1Yz7PePd0cDSKHZjGeNXTVASwnjfnr2vmIYEqBsOWrsqgJKNZncrTU4QJuxGmub89/HcjRJQOtkpF0mwASTzbNfk9Pr+2ly8psAJIeoeNAbvb6yuACtBRD1V7lTQWAswkU+ni/ykVcEk9o2koNtIv6dXm/nIxVeaqNfRQNIJ2kB4n85inIq8lFEkhlRBSABUe1Wo0tAXOvUNLPlsB0VDaCJHFsahJypThaKhgJVTFsloJd6t8pJm2fXqZkD6zOeF8UESI0wEQgnCx05OaDZ0sxatRxUA2QMxw5IzeJr2dl1JYLOFzLVKKU6A0u32q2GlvhP2NX+owckk6zs7GZcA5SlBkBlHaR2309HJkmLLTlUv4oLUJaK+X0pMtAfIuFWACkASsVKWrOoTvN6ZPp+ZZEAilcEBERAQAQEREBABAREQEAEBERAQAQE9AkanWYV+5lOagAAAABJRU5ErkJggg==" /><!-- --></p>
 <p>While continuing to use unrelated variables, sub_dann did much better than dann.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"> subDannPreds &lt;-<span class="st"> </span><span class="kw">sub_dann</span>(<span class="dt">xTrain =</span> xTrain, <span class="dt">yTrain =</span> yTrain, <span class="dt">xTest =</span> xTest, </a>
 <a class="sourceLine" id="cb6-2" title="2">                          <span class="dt">k =</span> <span class="dv">3</span>, <span class="dt">neighborhood_size =</span> <span class="dv">50</span>, <span class="dt">epsilon =</span> <span class="dv">1</span>, </a>
@@ -400,6 +398,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>Overall, dann with the correct variables did better than sub_dann. But in practice, it is usually unknown which variables are informative. The best course of action is to find the best set of variables. But due to project timelines, this is not always an option. subb_dann is an way to gain some level of performance with minimal work.</p>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

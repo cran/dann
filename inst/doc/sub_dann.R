@@ -1,7 +1,7 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 
-## ----exampleP1-----------------------------------------------------------
+## ----exampleP1----------------------------------------------------------------
  library(dann)
  library(mlbench)
  library(magrittr)
@@ -41,7 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
    )
  
 
-## ----shape---------------------------------------------------------------
+## ----shape--------------------------------------------------------------------
  xTrain <- train %>%
    select(X1, X2, U1, U2, U3, U4, U5) %>%
    as.matrix()
@@ -60,24 +60,24 @@ knitr::opts_chunk$set(echo = TRUE)
    as.numeric() %>%
    as.vector()
 
-## ----dann----------------------------------------------------------------
+## ----dann---------------------------------------------------------------------
  dannPreds <- dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
                    k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
  mean(dannPreds == yTest) # Not a good model
 
-## ----graph---------------------------------------------------------------
+## ----graph--------------------------------------------------------------------
  
  graph_eigenvalues(xTrain = xTrain, yTrain = yTrain, 
                    neighborhood_size = 50, weighted = FALSE, sphere = "mcd")
 
-## ----subDann-------------------------------------------------------------
+## ----subDann------------------------------------------------------------------
  subDannPreds <- sub_dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
                           k = 3, neighborhood_size = 50, epsilon = 1, 
                           probability = FALSE, 
                           weighted = FALSE, sphere = "mcd", numDim = 2)
  mean(subDannPreds == yTest) # sub_dan does much better when unrelated variables are present.
 
-## ----dann2---------------------------------------------------------------
+## ----dann2--------------------------------------------------------------------
  variableSelectionDann <- dann(xTrain = xTrain[, 1:2], yTrain = yTrain, xTest = xTest[, 1:2],
                                k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
  

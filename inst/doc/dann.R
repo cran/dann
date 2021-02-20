@@ -1,10 +1,10 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----simData-------------------------------------------------------------
+## ----simData------------------------------------------------------------------
 library(dann)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2)
@@ -27,7 +27,7 @@ ggplot(test, aes(x = X1, y = X2, colour = Y)) +
   geom_point() + 
   labs(title = "Test Data")
 
-## ----Cluster-------------------------------------------------------------
+## ----Cluster------------------------------------------------------------------
 xTrain <- train %>%
   select(X1, X2) %>%
   as.matrix()
@@ -44,7 +44,7 @@ yTest <- test %>%
   as.numeric() %>%
   as.vector()
 
-## ----model---------------------------------------------------------------
+## ----model--------------------------------------------------------------------
 dannPreds <- dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest,
                   k = 7, neighborhood_size = 150, epsilon = 1)
 round(mean(dannPreds == yTest), 2)
