@@ -1,11 +1,9 @@
-context("testing dann")
-library(dann)
-library(mlbench)
-library(magrittr)
-library(dplyr)
+library(mlbench, warn.conflicts = FALSE)
+library(magrittr, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
 
 ###############################################
-# Same Resutls as python version?
+# Same results as python version?
 ###############################################
 ######################
 # Problem 1
@@ -94,7 +92,7 @@ yTest <- test %>%
   as.numeric() %>%
   as.vector()
 
-dannPreds <- dann(xTrain, yTrain, xTest, 5, 50, 1, FALSE)
+dannPreds <- dann(xTrain, yTrain, xTest)
 
 test_that("Validate structure", {
   expect_true(is.vector(dannPreds))
@@ -363,28 +361,6 @@ test_that("Confirm class probabilities are divisible by k", {
 # K equal 2
 ######################
 K <- 2
-dannPreds <- dann(xTrain, yTrain, xTest, K, 15, 1, TRUE)
-test_that("Validate structure", {
-  expect_true(is.matrix(dannPreds))
-  expect_true(is.numeric(dannPreds))
-  expect_true(nrow(dannPreds) == nrow(xTest))
-  expect_true(ncol(dannPreds) == 2)
-  expect_true(all(colnames(dannPreds) == c("Class1", "Class2")))
-})
-
-test_that("Confirm class probabilities sum to 1", {
-  expect_true(all(rowSums(dannPreds) == 1))
-})
-
-possibleProb <- 0:K / K
-test_that("Confirm class probabilities are divisible by k", {
-  expect_true(all(dannPreds %in% possibleProb))
-})
-
-######################
-# K equal 3
-######################
-K <- 3
 dannPreds <- dann(xTrain, yTrain, xTest, K, 15, 1, TRUE)
 test_that("Validate structure", {
   expect_true(is.matrix(dannPreds))

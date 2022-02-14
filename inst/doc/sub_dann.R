@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
  train <- mlbench.circle(500, 2) %>%
    tibble::as_tibble()
  colnames(train)[1:3] <- c("X1", "X2", "Y")
+ train <- train %>%
+  mutate(Y = as.numeric(Y))
 
  # Add 5 unrelated variables
  train <- train %>%
@@ -29,6 +31,8 @@ knitr::opts_chunk$set(echo = TRUE)
  test <- mlbench.circle(500, 2) %>%
    tibble::as_tibble()
  colnames(test)[1:3] <- c("X1", "X2", "Y")
+ test <- test %>%
+  mutate(Y = as.numeric(Y))
 
  # Add 5 unrelated variables
  test <- test %>%
@@ -41,45 +45,29 @@ knitr::opts_chunk$set(echo = TRUE)
    )
  
 
-## ----shape--------------------------------------------------------------------
- xTrain <- train %>%
-   select(X1, X2, U1, U2, U3, U4, U5) %>%
-   as.matrix()
-
- yTrain <- train %>%
-   pull(Y) %>%
-   as.numeric() %>%
-   as.vector()
-
- xTest <- test %>%
-   select(X1, X2, U1, U2, U3, U4, U5) %>%
-   as.matrix()
-
- yTest <- test %>%
-   pull(Y) %>%
-   as.numeric() %>%
-   as.vector()
-
 ## ----dann---------------------------------------------------------------------
- dannPreds <- dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
-                   k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
- mean(dannPreds == yTest) # Not a good model
+ dannPreds <- dann_df(
+  formula = Y~X1 + X2 + U1 + U2 + U3 + U4 + U5,
+  train = train, test = test,
+  k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
+ mean(dannPreds == test$Y)
 
 ## ----graph--------------------------------------------------------------------
- 
- graph_eigenvalues(xTrain = xTrain, yTrain = yTrain, 
+ graph_eigenvalues_df(formula = Y~X1 + X2 + U1 + U2 + U3 + U4 + U5, train = train, 
                    neighborhood_size = 50, weighted = FALSE, sphere = "mcd")
 
 ## ----subDann------------------------------------------------------------------
- subDannPreds <- sub_dann(xTrain = xTrain, yTrain = yTrain, xTest = xTest, 
-                          k = 3, neighborhood_size = 50, epsilon = 1, 
-                          probability = FALSE, 
-                          weighted = FALSE, sphere = "mcd", numDim = 2)
- mean(subDannPreds == yTest) # sub_dan does much better when unrelated variables are present.
+ subDannPreds <- sub_dann_df(formula = Y~X1 + X2 + U1 + U2 + U3 + U4 + U5, 
+                             train = train, test = test,
+                             k = 3, neighborhood_size = 50, epsilon = 1, 
+                             probability = FALSE, 
+                             weighted = FALSE, sphere = "mcd", numDim = 2)
+ mean(subDannPreds == test$Y)
 
 ## ----dann2--------------------------------------------------------------------
- variableSelectionDann <- dann(xTrain = xTrain[, 1:2], yTrain = yTrain, xTest = xTest[, 1:2],
+ variableSelectionDann <- dann_df(formula = Y~X1 + X2, 
+                               train = train, test = test,
                                k = 3, neighborhood_size = 50, epsilon = 1, probability = FALSE)
  
- mean(variableSelectionDann == yTest) # Best model found when only true predictors are used.
+ mean(variableSelectionDann == test$Y)
 
