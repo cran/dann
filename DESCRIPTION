@@ -1,9 +1,9 @@
 Package: dann
 Type: Package
 Title: Discriminant Adaptive Nearest Neighbor Classification
-Version: 1.0.0
-Author: Greg McMahan
-Maintainer: Greg McMahan <gmcmacran@gmail.com>
+Version: 1.0.2
+Authors@R: 
+    person("Greg", "McMahan", , "gmcmacran@gmail.com", role = c("aut", "cre"))
 Description: Discriminant Adaptive Nearest Neighbor Classification is a 
     variation of k nearest neighbors where the shape of the neighborhood is 
     data driven. This package implements dann and sub_dann from
@@ -12,14 +12,17 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: MASS (>= 7.3), stats (>= 3.5.3), tibble (>= 2.1.1), ggplot2
         (>= 3.1.1), stringr (>= 1.4.0), purrr (>= 0.3.2), rlang (>=
-        0.3.4), fpc (>= 2.1-11.1), Rcpp (>= 1.0.1), hardhat, ellipsis
-RoxygenNote: 7.2.3
-Suggests: testthat (>= 3.0.0), rmarkdown (>= 1.18), covr (>= 3.2.1),
-        mlbench (>= 2.1-1), dplyr (>= 0.8.0.1), magrittr (>= 1.5),
-        recipes
+        1.0.0), fpc (>= 2.1-11.1), Rcpp (>= 1.0.1), hardhat
+RoxygenNote: 7.3.2
+Suggests: testthat (>= 3.0.0), rmarkdown (>= 1.18), mlbench (>= 2.1-1),
+        dplyr (>= 0.8.0.1), magrittr (>= 1.5), recipes
 LinkingTo: Rcpp, RcppArmadillo
 Config/testthat/edition: 3
+URL: https://github.com/gmcmacran/dann
+BugReports: https://github.com/gmcmacran/dann/issues
 NeedsCompilation: yes
-Packaged: 2023-09-23 15:27:35 UTC; gmcma
+Packaged: 2025-04-12 20:28:20 UTC; ixi_eulogy_ixi
+Author: Greg McMahan [aut, cre]
+Maintainer: Greg McMahan <gmcmacran@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-09-23 15:50:03 UTC
+Date/Publication: 2025-04-12 21:00:05 UTC

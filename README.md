@@ -10,7 +10,6 @@
 coverage](https://codecov.io/gh/gmcmacran/dann/branch/main/graph/badge.svg)](https://app.codecov.io/gh/gmcmacran/dann?branch=main)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/dann)](https://cran.r-project.org/package=dann)
-
 <!-- badges: end -->
 
 An implementation of Hastie and Tibshirani’s Discriminant Adaptive
@@ -50,6 +49,7 @@ In this example, simulated data is made. The overall trend is a circle
 inside a square.
 
 ``` r
+knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
 library(dann)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2)
@@ -188,6 +188,7 @@ the number of large eigenvalues. The graph suggests 2 (the correct
 answer).
 
 ``` r
+knitr::opts_chunk$set(echo = TRUE, fig.width = 10, fig.height = 10)
 graph_eigenvalues(
   formula = Y ~ X1 + X2 + U1 + U2 + U3 + U4 + U5,
   data = train,

@@ -1,3 +1,12 @@
+# dann v 1.0.2
+  First build on mint.
+  Remove return linter.
+  
+# dann v 1.0.1
+  Link github in description.
+  Update actions.
+  Remove ellipsis dependency for rlang for ... check.
+  
 # dann v 1.0.0
   Adding linter.
   Adding ... checks.
